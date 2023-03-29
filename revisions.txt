@@ -1,0 +1,36 @@
+2015-10-26
+"scanDirectory" deprecated. Put in a working routine.
+
+2016-04-27
+- put in changes documented in forum around February 2016, mainly changing the "Eingabe" part of the script to correctly display single items.
+- venue list was improperly displayed in frontend input of a single date (input AND select were displayed). Corrected.
+
+2016-05-19
+results_success.tpl: Demo template expanded, new feature: month name proceeds every bundle of items for that month.
+
+2016-06-13
+Module output: if module was used multiple times, class "sKalender" was loaded multiple times => error. Class call is checked now before it is executed.
+
+2016-08-11
+Module "Ausgabe" output section: if module was used multiple times, $terminliste wasn't empty the second time in case no dates should have been found there. Added/moved array initiations for $MOD and $terminliste.
+Module "Ausgabe" output section: the variables for short and full year determination had reversed y/Y flags. Fixed.
+Module "Ausgabe" and "Eingabe", input section: if-conditions for includes, to avoid collision with other TONE2TONE modules e.g. ALR where same name files are included.
+
+2016-11-28
+Template "results_success.tpl" treated "target" with true or false instead of blank or empty content. Corrected. 
+
+2016-11-30
+Function "Link setzen" only showed external links in result-template, no internal or file links. Corrected in module output and in template file.
+
+2018-12-13 Module "Ausgabe" output section, line 432: $tlimage->loadByPrimaryKey() is a double function as one line above the instance is already called. Deleted.
+
+2019-04-24
+Updated Terminliste-Ausgabe with all additions from contenido-forum from 2016 to 2018.
+Updates results-success Smarty template to show more possibilities related to date and time.
+Bug: hardcoded "http" prohibited saving dates on a https site. Code changed to generic protocol variable to make it flexible for each setting.
+
+
+--- not yet documented
+
+
+(nothing)

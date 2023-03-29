@@ -1,0 +1,196 @@
+Für den=Für den
+Main configuration=Auswahl der Kategorien und Vorlagen
+Monats&uuml;bersicht anzeigen.=Monatsübersicht anzeigen
+Save changes=Save changes
+Termine für den=Termine für den
+amount_of_days=Anzahl Tage
+anzeigen=anzeigen
+cal configuration=Konfiguration des Kalenders
+category configuration=Termin-Kategorien (Modulausgabe, Kalender und FEU-Formular-Eingrenzung)
+date_from=vom:
+date_until=bis:
+dateframe=Bitte wählen Sie den gewünschten Zeitraum:
+days=Tage
+error_datenotvalid=This is not a valid date.
+existieren Termine=existieren Termine.
+existieren keine Termine.=existieren keine Termine.
+extend_search=Wählen Sie ein größeres Zeitfenster.
+feu configuration=Konfiguration des Frontenduser-Formulars
+frei=frei
+from=von
+fullday=ganztägig
+gebucht=gebucht
+headline_categoryoptions=Grenzen Sie die Kategorien ein:
+headline_timeoptions=Grenzen Sie den Zeitrahmen ein:
+keep_menu_open=Einstellungsfenster nicht einklappen 
+label_adddir=Zusätzliche Kategorien:
+label_amountofdates=Anzahl angezeigter Termine
+label_behaviour=Darstellung der grauen Boxen unten:
+label_caldropdown=Monat-Dropdown anzeigen? (erfordert Jahreszahlen unten)
+label_calendar_years=Gewünschte Kalenderjahre (strichkommagetrennt)
+label_categories=Wähle Kategorien für die Liste:
+label_category_main=Primäre Kategorie
+label_determineoutput=Was soll das Modul tun?
+label_displaycontent=Bei Terminen ohne HTML Inhalt Details anzeigen?
+label_groupsameday=Termine des gleichen Tags zusammenfassen?
+label_linkeddates=Verlinkte Termine direkt anzeigen?
+label_online=Modul aktivieren:
+label_showcat=Kategorien anzeigen?
+label_showcomingdates=Aktuelle Termine anzeigen?
+label_showmonth=Wochentage anzeigen?
+label_showpasseddates=Abgelaufene Termine anzeigen?
+label_showweekdays=Wochentage anzeigen?
+label_sort=Sortierung
+label_teaser=Auf Teaser beschränken?
+label_template=Vorlage für Terminausgabe
+label_template_calendar=Vorlage für Kalendar
+label_template_feuform=Vorlage für Frontend-Suche
+label_timeframeoptions=Zeitoptionen (heute, wöchentlich, ...) anzeigen?
+module configuration=Konfiguration für reine Modulausgabe
+n&auml;chster Monat=nächster Monat
+oclock=Uhr
+please_choose=Bitte wählen
+search=Suche starten
+thismonth=aktueller Monat
+thisweek=aktuelle Woche
+thisyear=aktuelles Jahr
+to=bis
+today=heute
+value_all=Alle Termine
+value_asc=aufsteigend
+value_below=alle unterhalb der primären Kategorie
+value_checkbox=Checkboxen
+value_days=Tage
+value_desc=absteigend
+value_dropdown=Dropdown-Liste
+value_lastdays=letzten x Tage
+value_month=aktueller Monat
+value_none=keine
+value_select=auswählen
+value_timeframe=Datum von - bis Format jjjj-mm-tt  
+value_week=aktuelle Woche
+value_year=aktuelles Jahr
+vorheriger Monat=vorheriger Monat
+weekdays_long=Wochentag
+weekdays_none=keine Bezeichung
+weekdays_short=Abkürzungen
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,1 @@
+<p>{$searcherrortext}</p>

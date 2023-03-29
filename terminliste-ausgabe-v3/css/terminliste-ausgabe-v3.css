@@ -1,0 +1,102 @@
+#mod_sK a { 
+ font-family: sans-serif;
+ font-size: 12px;
+ text-decoration: none; 
+ color: #444444;
+}
+
+#mod_sK a.tag { 
+ font-size: 9px;
+}
+
+#mod_sK table {
+ width: 160px;
+ border: 1px solid #ffffff;
+ margin-left: 10px;
+ border-spacing: 4pt;
+ font-size: 12px;
+ font-family: sans-serif;
+ text-decoration: none; 
+ color: #000000;
+}
+
+#mod_sK td.navl {
+ text-align: left; 
+ width: 20%;
+ font-weight: bold;
+}
+
+#mod_sK td.navr {
+ text-align: right; 
+ width: 20%;
+ font-weight: bold;
+
+}
+#mod_sK td.navm {
+ text-align: center; 
+ width: 60%;
+ font-weight: bold;
+}
+
+#mod_sK td.wtag {
+ width:14%;
+ background-color: #ffffff;	
+ text-align: center; 
+ color: #000000;
+ font-family: sans-serif;
+}
+
+#mod_sK td.wochenende {
+ background-color: #eeeeee;	
+ color: #aaaaaa;	
+ text-align: right; 
+ border: 1px solid #aaaaaa;
+ padding-right: 3px;
+ }
+
+#mod_sK td.wochentag {
+ color: #999999;	
+ text-align: right; 
+ border: 1px solid #aaaaaa;
+ padding-right: 3px;
+ }
+
+#mod_sK td.heute {
+ background-color: #ff00ff;
+ color: #43A0AF;	
+ text-align: right; 
+ border: 1px solid #aaaaaa;
+ padding-right: 3px;
+ }
+
+#mod_sK td.belegt {
+ background-color: #e3e3ff;
+ color: #9E5357;	
+ text-align: right; 
+ border: 1px solid #aaaaaa;
+ padding-right: 3px;
+ }
+
+#mod_sK td.belegtwe {
+ background-color: #bfbfff;
+ color: #9E5357;	
+ text-align: right; 
+ border: 1px solid #aaaaaa;
+ padding-right: 3px;
+ }
+
+#mod_sK td.tangiert {
+ background-color: #ffffcc;
+ color: #9E5357;	
+ text-align: right; 
+ border: 1px solid #aaaaaa;
+ padding-right: 3px;
+ }
+
+#mod_sK td.tangiertwe {
+ background-color: #ffff99;
+ color: #9E5357;	
+ text-align: right; 
+ border: 1px solid #aaaaaa;
+ padding-right: 3px;
+ }
