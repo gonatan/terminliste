@@ -270,9 +270,9 @@
              }
           }
           
-       if ($MOD_TE_termin[15] == '0') $MOD_TE_termin[status] = mi18n("frei");
-        if ($MOD_TE_termin[15] == '1') $MOD_TE_termin[status] = mi18n("reserviert");
-        if ($MOD_TE_termin[15] == '2') $MOD_TE_termin[status] = mi18n("gebucht");
+       if ($MOD_TE_termin[15] == '0') $MOD_TE_termin["status"] = mi18n("frei");
+        if ($MOD_TE_termin[15] == '1') $MOD_TE_termin["status"] = mi18n("reserviert");
+        if ($MOD_TE_termin[15] == '2') $MOD_TE_termin["status"] = mi18n("gebucht");
            
         // Eingabefeld der Wochentage prüfen
         $MOD_TE_mo = (stristr($MOD_TE_termin[11], 'Mo')) ? "yes" : no;
@@ -294,32 +294,32 @@
         if (strlen($MOD_TE_termin[2]) > 1) $MOD_TE_datum2_array = explode("-",$MOD_TE_termin[2]);
        
        
-       if ( !$MOD_TE_termin[cycle] && $MOD_TE_termin[22] == "" ) {
+       if ( !$MOD_TE_termin["cycle"] && $MOD_TE_termin[22] == "" ) {
           
              $dateHelper = new DateTime($MOD_TE_termin["1date"]);
-             $MOD_TE_termin[date0_german] = $dateHelper->format("d.m.Y");
-             $MOD_TE_termin[date0_day] = $dateHelper->format("d");
-             $MOD_TE_termin[date0_month] = $dateHelper->format("m");
-             $MOD_TE_termin[date0_year] = $dateHelper->format("Y");
-             $MOD_TE_termin[date0_weekdaynum] = $dateHelper->format("w");
-             $MOD_TE_termin[date0_dayfull] = $days_short[$lang][$MOD_TE_termin[date0_weekdaynum]];
-             $MOD_TE_termin[date0_dayshort] = $days_full[$lang][$MOD_TE_termin[date0_weekdaynum]];
+             $MOD_TE_termin["date0_german"] = $dateHelper->format("d.m.Y");
+             $MOD_TE_termin["date0_day"] = $dateHelper->format("d");
+             $MOD_TE_termin["date0_month"] = $dateHelper->format("m");
+             $MOD_TE_termin["date0_year"] = $dateHelper->format("Y");
+             $MOD_TE_termin["date0_weekdaynum"] = $dateHelper->format("w");
+             $MOD_TE_termin["date0_dayfull"] = $days_short[$lang][$MOD_TE_termin["date0_weekdaynum"]];
+             $MOD_TE_termin["date0_dayshort"] = $days_full[$lang][$MOD_TE_termin["date0_weekdaynum"]];
              
              $dateHelper = new DateTime($MOD_TE_termin["2date"]);
-             $MOD_TE_termin[date2_german] = $dateHelper->format("d.m.Y");
-             $MOD_TE_termin[date2_day] = $dateHelper->format("d");
-             $MOD_TE_termin[date2_month] = $dateHelper->format("m");
-             $MOD_TE_termin[date2_year] = $dateHelper->format("Y");
-             $MOD_TE_termin[date2_weekdaynum] = $dateHelper->format("w");
-             $MOD_TE_termin[date2_dayfull] = $days_short[$lang][$MOD_TE_termin[date2_weekdaynum]];
-             $MOD_TE_termin[date2_dayshort] = $days_full[$lang][$MOD_TE_termin[date2_weekdaynum]];   
+             $MOD_TE_termin["date2_german"] = $dateHelper->format("d.m.Y");
+             $MOD_TE_termin["date2_day"] = $dateHelper->format("d");
+             $MOD_TE_termin["date2_month"] = $dateHelper->format("m");
+             $MOD_TE_termin["date2_year"] = $dateHelper->format("Y");
+             $MOD_TE_termin["date2_weekdaynum"] = $dateHelper->format("w");
+             $MOD_TE_termin["date2_dayfull"] = $days_short[$lang][$MOD_TE_termin["date2_weekdaynum"]];
+             $MOD_TE_termin["date2_dayshort"] = $days_full[$lang][$MOD_TE_termin["date2_weekdaynum"]];   
           
           } else {
              
              $MOD_TE_amodus2 = $MOD_TE_termin[19];
              // Wenn zusätzliche Termine bei Einzeltermin
              if($MOD_TE_termin[2] == '') $MOD_TE_termin[2] = $MOD_TE_termin[1];
-             if( !$MOD_TE_termin[cycle] ) $MOD_TE_termin[10] = 'tag';
+             if( !$MOD_TE_termin["cycle"] ) $MOD_TE_termin[10] = 'tag';
                 
              $MOD_TE_zdate_array = makedatearray( $MOD_TE_termin[0],$MOD_TE_termin[2],
                                   $MOD_TE_termin[10],$MOD_TE_termin[16],
@@ -330,23 +330,23 @@
                 for ($MOD_TE_durchlauf2=0; $MOD_TE_durchlauf2<count($MOD_TE_zdate_array); $MOD_TE_durchlauf2++)
                    {
                    $dateHelper = new DateTime($MOD_TE_zdate_array[$MOD_TE_durchlauf2]);
-                   $MOD_TE_termin[date0_german] = $dateHelper->format("d.m.Y");
-                   $MOD_TE_termin[date0_day] = $dateHelper->format("d");
-                   $MOD_TE_termin[date0_month] = $dateHelper->format("m");
-                   $MOD_TE_termin[date0_year] = $dateHelper->format("Y");
-                   $MOD_TE_termin[date0_weekdaynum] = $dateHelper->format("w");
-                   $MOD_TE_termin[date0_dayfull] = $days_short[$lang][$MOD_TE_termin[date0_weekdaynum]];
-                   $MOD_TE_termin[date0_dayshort] = $days_full[$lang][$MOD_TE_termin[date0_weekdaynum]];
+                   $MOD_TE_termin["date0_german"] = $dateHelper->format("d.m.Y");
+                   $MOD_TE_termin["date0_day"] = $dateHelper->format("d");
+                   $MOD_TE_termin["date0_month"] = $dateHelper->format("m");
+                   $MOD_TE_termin["date0_year"] = $dateHelper->format("Y");
+                   $MOD_TE_termin["date0_weekdaynum"] = $dateHelper->format("w");
+                   $MOD_TE_termin["date0_dayfull"] = $days_short[$lang][$MOD_TE_termin["date0_weekdaynum"]];
+                   $MOD_TE_termin["date0_dayshort"] = $days_full[$lang][$MOD_TE_termin["date0_weekdaynum"]];
              
 
-                   $MOD_TE_termin[show] = true;
-                   if ( $MOD_TE_termin[18] == '1' &&  $MOD_TE_termin[1] < $MOD_TE_today ) $MOD_TE_termin[show] = false;
+                   $MOD_TE_termin["show"] = true;
+                   if ( $MOD_TE_termin[18] == '1' &&  $MOD_TE_termin[1] < $MOD_TE_today ) $MOD_TE_termin["show"] = false;
 
                    if($MOD_TE_amodus2 > -1)
                       {
                       if($MOD_TE_amodus2 == 0)
-                         $MOD_TE_termin[show] = false;
-                      elseif ($MOD_TE_termin[show])
+                         $MOD_TE_termin["show"] = false;
+                      elseif ($MOD_TE_termin["show"])
                          $MOD_TE_amodus2 = $MOD_TE_amodus2-1;
                       }
                 
@@ -364,14 +364,14 @@
        
        
         // ab hier das Formular für die Editieransicht
-       $MOD_TE_termin[startdate] = "CMS_DATE[1]";
-       $MOD_TE_termin[enddate] = "CMS_DATE[2]";
-       $MOD_TE_termin[text] = "CMS_HTML[8]";
-       $MOD_TE_termin[linkstd] = "CMS_LINK[9]";
-       $MOD_TE_termin[linkdesc] = "CMS_LINKEDITOR[9]";
-       $MOD_TE_termin[cycle] = ($MOD_TE_termin[10] == "no"   ) ? false : true;
-       $MOD_TE_termin[imagesrc] = "CMS_IMG[14]";
-       $MOD_TE_termin[imageeditor] = "CMS_IMGEDITOR[14]";   
+       $MOD_TE_termin["startdate"] = "CMS_DATE[1]";
+       $MOD_TE_termin["enddate"] = "CMS_DATE[2]";
+       $MOD_TE_termin["text"] = "CMS_HTML[8]";
+       $MOD_TE_termin["linkstd"] = "CMS_LINK[9]";
+       $MOD_TE_termin["linkdesc"] = "CMS_LINKEDITOR[9]";
+       $MOD_TE_termin["cycle"] = ($MOD_TE_termin[10] == "no"   ) ? false : true;
+       $MOD_TE_termin["imagesrc"] = "CMS_IMG[14]";
+       $MOD_TE_termin["imageeditor"] = "CMS_IMGEDITOR[14]";   
        
        $tpl = cSmartyFrontend::getInstance();
        //$tpl->assign('actionlink', "front_content.php?idcat=$idcat&idart=$idart&lang=$lang&client=$client&contenido=$contenido");

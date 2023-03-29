@@ -50,14 +50,14 @@ $terminliste = array();
 // needs date settings in administration / languages (last 4 input elements per language menu)
 $oLang = new cApiLanguage();
 $oLang->loadByPrimaryKey($lang);
-$MOD[datetimeformat]     = $oLang->getProperty("dateformat", "full");
-$MOD[dateformat]         = $oLang->getProperty("dateformat", "date");
-$MOD[timeformat]         = $oLang->getProperty("dateformat", "time");
+$MOD["datetimeformat"]     = $oLang->getProperty("dateformat", "full");
+$MOD["dateformat"]         = $oLang->getProperty("dateformat", "date");
+$MOD["timeformat"]         = $oLang->getProperty("dateformat", "time");
 
 // add genericDate so that even dates with no date categorie can be tracked
 $clientcategories[1] = "genericDate;".getEffectiveSetting('terminliste', 'categories', '');
-$MOD[categories]     = explode(";", $clientcategories[1]);
-if ( $bDebug ) { print "<br>Mandanteneinstellungen für Kategorien:<br><pre>"; print_r($MOD[categories]); print "</pre>";}
+$MOD["categories"]     = explode(";", $clientcategories[1]);
+if ( $bDebug ) { print "<br>Mandanteneinstellungen für Kategorien:<br><pre>"; print_r($MOD["categories"] ); print "</pre>";}
 $catcount            = count(explode(";", $clientcategories[1]));
 
 // Create language dependent variables to replace date and time with locales
@@ -77,54 +77,54 @@ $months_full[1]      = array(1=>"Januar", 2=>"Februar", 3=>"März", 4=>"April", 
 
 
 // definitions of variables
-$MOD[datensaetze] = 0; // Zähler für das Auslesen der Datensätze
-$MOD[zaehler]     = 0; // Zähler für den Termindurchlauf
-$MOD[zaehler2]    = 0; // Zähler für zyklische Termine
-$MOD[gefunden]    = false; // für die Steuerung der Anzeige (Termine gefunden)
+$MOD["datensaetze"] = 0; // Zähler für das Auslesen der Datensätze
+$MOD["zaehler"]     = 0; // Zähler für den Termindurchlauf
+$MOD["zaehler2"]    = 0; // Zähler für zyklische Termine
+$MOD["gefunden"]    = false; // für die Steuerung der Anzeige (Termine gefunden)
 
 // Variablen aus Input Bereich
-$MOD[display]       = ("CMS_VALUE[0]" == 'true') ? true : false;  // show list at all. To be programmed in Smarty template.
-$MOD[tpl_results]   = ("CMS_VALUE[24]" != "" ) ? "CMS_VALUE[24]" : "results_success.tpl";
-$MOD[tpl_calendar]  = ("CMS_VALUE[27]" != "" ) ? "CMS_VALUE[27]" : "calendar.tpl";
-$MOD[tpl_feuform]   = ("CMS_VALUE[28]" != "" ) ? "CMS_VALUE[28]" : "feu_searchform.tpl";
-$MOD[alle]          = ("CMS_VALUE[1]" == '') ? "no" : "yes";  // abgelaufene Termine anzeigen
-$MOD[group]         = ("CMS_VALUE[8]" == '') ? "no" : "yes";  // Termine gruppieren 
-$MOD[linkyn]        = ("CMS_VALUE[9]" == '') ? "no" : "yes";  // Termine verlinken 
-$MOD[linkyn]        = "yes";  // Termine verlinken 
-$MOD[htmlyn]       = ("CMS_VALUE[10]" == '') ? "no" : "yes";  // Anzeige des Termins auch ohne HTML Info
-$MOD[show_monat]    = ("CMS_VALUE[12]" == '') ? false : true;
-$MOD[kata_tcheck]   = ("CMS_VALUE[19]" == '') ? false : true;
+$MOD["display"]       = ("CMS_VALUE[0]" == 'true') ? true : false;  // show list at all. To be programmed in Smarty template.
+$MOD["tpl_results"]   = ("CMS_VALUE[24]" != "" ) ? "CMS_VALUE[24]" : "results_success.tpl";
+$MOD["tpl_calendar"]  = ("CMS_VALUE[27]" != "" ) ? "CMS_VALUE[27]" : "calendar.tpl";
+$MOD["tpl_feuform"]   = ("CMS_VALUE[28]" != "" ) ? "CMS_VALUE[28]" : "feu_searchform.tpl";
+$MOD["alle"]          = ("CMS_VALUE[1]" == '') ? "no" : "yes";  // abgelaufene Termine anzeigen
+$MOD["group"]         = ("CMS_VALUE[8]" == '') ? "no" : "yes";  // Termine gruppieren 
+$MOD["linkyn"]        = ("CMS_VALUE[9]" == '') ? "no" : "yes";  // Termine verlinken 
+$MOD["linkyn"]        = "yes";  // Termine verlinken 
+$MOD["htmlyn"]       = ("CMS_VALUE[10]" == '') ? "no" : "yes";  // Anzeige des Termins auch ohne HTML Info
+$MOD["show_monat"]    = ("CMS_VALUE[12]" == '') ? false : true;
+$MOD["kata_tcheck"]   = ("CMS_VALUE[19]" == '') ? false : true;
 
-$MOD[zeitraum1]     = "CMS_VALUE[2]"; // Zeitraum für abgelaufene Termine
-$MOD[zeitraum2]     = "CMS_VALUE[3]"; // Zeitraum für aktuelle Termine
-$MOD[last_days]     = "CMS_VALUE[4]"; // abgelaufene Termine der letzten x Tage
-$MOD[von_datum]     = "CMS_VALUE[5]"; // Datum für aktuelle Termine; Anzeige von
-$MOD[bis_datum]     = "CMS_VALUE[6]"; // Datum für aktuelle Termine; Anzeige bis
-$MOD[wtag_bez]      = "CMS_VALUE[7]"; // Anzeige der Wochentage
-$MOD[idcat]         = "CMS_VALUE[11]"; // Kategorie der Termine
-$MOD[plustag]       = "CMS_VALUE[13]"; // Bei Wochen- und Monatsansicht zusätzlich x Tage anzeigen
-$MOD[z2_tage]       = "CMS_VALUE[14]"; // Termine der nächsten x Tage anzeigen
-$MOD[anzahl_termine]= "CMS_VALUE[15]"; // x Termine anzeigen
-$MOD[sort]          = "CMS_VALUE[16]"; // Sortierung der Termine
-$MOD[add_tree]      = "CMS_VALUE[17]"; // zusätzliche Kategorien anzeigen
-$MOD[add_tree_ids]  = "CMS_VALUE[18]"; // ids der zusätzlichen Kategorien
-$MOD[modconfigbased]= "CMS_VALUE[21]";
-$MOD[show_cat]      = ( "CMS_VALUE[22]" == "none" ) ? false : true ; // Anzeige der Kategorien
-$MOD[catform]       = "CMS_VALUE[22]"; // Dropdown oder Checkboxen
-$MOD[show_timeopt]  = "CMS_VALUE[23]";
-$MOD[show_teaser]   = ("CMS_VALUE[29]" == '') ? false : true;
+$MOD["zeitraum1"]     = "CMS_VALUE[2]"; // Zeitraum für abgelaufene Termine
+$MOD["zeitraum2"]     = "CMS_VALUE[3]"; // Zeitraum für aktuelle Termine
+$MOD["last_days"]     = "CMS_VALUE[4]"; // abgelaufene Termine der letzten x Tage
+$MOD["von_datum"]     = "CMS_VALUE[5]"; // Datum für aktuelle Termine; Anzeige von
+$MOD["bis_datum"]     = "CMS_VALUE[6]"; // Datum für aktuelle Termine; Anzeige bis
+$MOD["wtag_bez"]      = "CMS_VALUE[7]"; // Anzeige der Wochentage
+$MOD["idcat"]         = "CMS_VALUE[11]"; // Kategorie der Termine
+$MOD["plustag"]       = "CMS_VALUE[13]"; // Bei Wochen- und Monatsansicht zusätzlich x Tage anzeigen
+$MOD["z2_tage"]       = "CMS_VALUE[14]"; // Termine der nächsten x Tage anzeigen
+$MOD["anzahl_termine"]= "CMS_VALUE[15]"; // x Termine anzeigen
+$MOD["sort"]          = "CMS_VALUE[16]"; // Sortierung der Termine
+$MOD["add_tree"]      = "CMS_VALUE[17]"; // zusätzliche Kategorien anzeigen
+$MOD["add_tree_ids"]  = "CMS_VALUE[18]"; // ids der zusätzlichen Kategorien
+$MOD["modconfigbased"]= "CMS_VALUE[21]";
+$MOD["show_cat"]      = ( "CMS_VALUE[22]" == "none" ) ? false : true ; // Anzeige der Kategorien
+$MOD["catform"]       = "CMS_VALUE[22]"; // Dropdown oder Checkboxen
+$MOD["show_timeopt"]  = "CMS_VALUE[23]";
+$MOD["show_teaser"]   = ("CMS_VALUE[29]" == '') ? false : true;
 
 // calendar specific
-$MOD[anzeigemodus]  = true; // Anzeigemodus Datum oder Status// Überprüfung ob zusätzliche Kategorien gewählt wurden
-$MOD[ddownyn]       = ( "CMS_VALUE[26]" == "yes" && "CMS_VALUE[25]" != "" ) ? true : false ;  // Dropdown-Feld aktiv
-$MOD[array_down]    = ( "CMS_VALUE[25]" != "") ? explode(";", "CMS_VALUE[25]") : ""; // Angezeigte Jahre im Dropdown Feld 
-$MOD[idart]         = $idart;
+$MOD["anzeigemodus"]  = true; // Anzeigemodus Datum oder Status// Überprüfung ob zusätzliche Kategorien gewählt wurden
+$MOD["ddownyn"]       = ( "CMS_VALUE[26]" == "yes" && "CMS_VALUE[25]" != "" ) ? true : false ;  // Dropdown-Feld aktiv
+$MOD["array_down"]    = ( "CMS_VALUE[25]" != "") ? explode(";", "CMS_VALUE[25]") : ""; // Angezeigte Jahre im Dropdown Feld 
+$MOD["idart"]         = $idart;
 
 // has FEU-Form been used? If so, this one has priority over module configuration settings
-$MOD[timeopt_none]  = ($MOD_TS_timeopt == "keine") ? "checked" : "";
-$MOD[timeopt_week]  = ($MOD_TS_timeopt == "woche") ? "checked" : "";
-$MOD[timeopt_month] = ($MOD_TS_timeopt == "monat") ? "checked" : "";
-$MOD[timeopt_year]  = ($MOD_TS_timeopt == "jahr")  ? "checked" : "";
+$MOD["timeopt_none"]  = ($MOD_TS_timeopt == "keine") ? "checked" : "";
+$MOD["timeopt_week"]  = ($MOD_TS_timeopt == "woche") ? "checked" : "";
+$MOD["timeopt_month"] = ($MOD_TS_timeopt == "monat") ? "checked" : "";
+$MOD["timeopt_year"]  = ($MOD_TS_timeopt == "jahr")  ? "checked" : "";
 
 // to do: do an error check on the FEU-Input (dates mainly) and program an error routine, style:
 // $errors[] = mi18n("error_datenotvalid");
@@ -133,81 +133,81 @@ $MOD[timeopt_year]  = ($MOD_TS_timeopt == "jahr")  ? "checked" : "";
 
 // from calendar 
 $calendarrequest = false;
-if ( $MOD[modconfigbased] == "calendar" ) {
+if ( $MOD["modconfigbased"] == "calendar" ) {
 	if ($_REQUEST['MOD_TL_newdate']) // Datum wurde über den sKalender neu gesetzt
 	{
-		$MOD[newdate_array] = explode("-",$_REQUEST['MOD_TL_newdate']);  // yyyy-m-t oder mm tt
-		$MOD[checkdate_von] = date("Y-m-d", mktime (0,0,0, $MOD[newdate_array][1], 1,  $MOD[newdate_array][0]));
-		$MOD[tag_max]       = date( "t", mktime(0,0,0, $MOD[newdate_array][1], 1, $MOD[newdate_array][0]));
-		$MOD[checkdate_bis] = date("Y-m-d", mktime (0,0,0, $MOD[newdate_array][1], $MOD[tag_max],  $MOD[newdate_array][0]));
+		$MOD["newdate_array"] = explode("-",$_REQUEST['MOD_TL_newdate']);  // yyyy-m-t oder mm tt
+		$MOD["checkdate_von"] = date("Y-m-d", mktime (0,0,0, $MOD["newdate_array"][1], 1,  $MOD["newdate_array"][0]));
+		$MOD["tag_max"]       = date( "t", mktime(0,0,0, $MOD["newdate_array"][1], 1, $MOD["newdate_array"][0]));
+		$MOD["checkdate_bis"] = date("Y-m-d", mktime (0,0,0, $MOD["newdate_array"][1], $MOD["tag_max"],  $MOD["newdate_array"][0]));
 	}
 	
 	if ($_REQUEST['MOD_TL_newdate'] && ($_REQUEST['MOD_TL_show'] == 't')) // Datum wurde über die Auswahl eines Termins im sKalender neu gesetzt
 	{
-		$MOD[newdate_array] = explode("-",$_REQUEST['MOD_TL_newdate']);  // yyyy-m-t oder mm tt
-		$MOD[checkdate_von] = date("Y-m-d", mktime (0,0,0, $MOD[newdate_array][1], $MOD[newdate_array][2],  $MOD[newdate_array][0]));
-		$MOD[checkdate_bis] = date("Y-m-d", mktime (0,0,0, $MOD[newdate_array][1], $MOD[newdate_array][2],  $MOD[newdate_array][0]));
+		$MOD["newdate_array"] = explode("-",$_REQUEST['MOD_TL_newdate']);  // yyyy-m-t oder mm tt
+		$MOD["checkdate_von"] = date("Y-m-d", mktime (0,0,0, $MOD["newdate_array"][1], $MOD["newdate_array"][2],  $MOD["newdate_array"][0]));
+		$MOD["checkdate_bis"] = date("Y-m-d", mktime (0,0,0, $MOD["newdate_array"][1], $MOD["newdate_array"][2],  $MOD["newdate_array"][0]));
 		$calendarrequest    = true;
 	}
 	if ( !isset($_REQUEST['MOD_TL_newdate']) ) // aktuelles Datum verwenden
 	{
-		$MOD[heute]         = getdate();
-		$MOD[checkdate_von] = date("Y-m-d", mktime (0,0,0, $MOD[heute]["mon"], 1,  $MOD[heute]["year"]));
-		$MOD[tag_max]       = date( "t", mktime(0,0,0, $MOD[heute]["mon"], 1, $MOD[heute]["year"]));
-		$MOD[checkdate_bis] = date("Y-m-d", mktime (0,0,0, $MOD[heute]["mon"], $MOD[tag_max],  $MOD[heute]["year"]));
+		$MOD["heute"]         = getdate();
+		$MOD["checkdate_von"] = date("Y-m-d", mktime (0,0,0, $MOD["heute"]["mon"], 1,  $MOD["heute"]["year"]));
+		$MOD["tag_max"]       = date( "t", mktime(0,0,0, $MOD["heute"]["mon"], 1, $MOD["heute"]["year"]));
+		$MOD["checkdate_bis"] = date("Y-m-d", mktime (0,0,0, $MOD["heute"]["mon"], $MOD["tag_max"],  $MOD["heute"]["year"]));
 	}
 }		
 
 // from Module Configuration
 
-if ( $MOD[modconfigbased] == "module" ) {
+if ( $MOD["modconfigbased"] == "module" ) {
 	
-	$MOD[checkdate_von] = dateout($MOD[zeitraum1],$MOD[last_days]); // Anzeigedatum des ältesten Termins
+	$MOD["checkdate_von"] = dateout($MOD["zeitraum1"],$MOD["last_days"]); // Anzeigedatum des ältesten Termins
 	
 	// wenn von - bis gewählt, werden abgelaufene Termine nicht angezeigt
-	$MOD[checkdate_bis] = datein($MOD[zeitraum2],$MOD[plustag],$MOD[z2_tage],$MOD[bis_datum]); // Anzeigedatum des aktuellsten Termins
-	if ($MOD[zeitraum2] == 'datum') { 
-		$MOD[checkdate_von] = ( $MOD[von_datum] != "" ) ? $MOD[von_datum] : "1970-01-01";
-		$MOD[checkdate_bis] = ( $MOD[bis_datum] != "" ) ? $MOD[bis_datum] : "9999-99-99";
+	$MOD["checkdate_bis"] = datein($MOD["zeitraum2"],$MOD["plustag"],$MOD["z2_tage"],$MOD["bis_datum"]); // Anzeigedatum des aktuellsten Termins
+	if ($MOD["zeitraum2"] == 'datum') { 
+		$MOD["checkdate_von"] = ( $MOD["von_datum"] != "" ) ? $MOD["von_datum"] : "1970-01-01";
+		$MOD["checkdate_bis"] = ( $MOD["bis_datum"] != "" ) ? $MOD["bis_datum"] : "9999-99-99";
 	}
 }
 
 // from feuform, if submitted
 $feurequest = ( isset($_POST['MOD_TS_datum_von']) ) ? true : false;
-if ( $MOD[modconfigbased] == "feuform" ) {
+if ( $MOD["modconfigbased"] == "feuform" ) {
 	
 	
 	if ( $_POST['MOD_TS_datum_von'] != '')
 	{
 		$dateHelper = new DateTime($_POST['MOD_TS_datum_von']); 
-		$MOD[checkdate_von] = $dateHelper->format("Y-m-d");
+		$MOD["checkdate_von"] = $dateHelper->format("Y-m-d");
 		
 	} else {
-		$MOD[checkdate_von] = '9999-99-99';
+		$MOD["checkdate_von"] = '9999-99-99';
 	}
 	if( $_POST['MOD_TS_datum_bis'] != '')
 	{
 		$dateHelper = new DateTime($_POST['MOD_TS_datum_bis']); 
-		$MOD[checkdate_bis] = $dateHelper->format("Y-m-d");
+		$MOD["checkdate_bis"] = $dateHelper->format("Y-m-d");
 	} else {
-		$MOD[checkdate_bis] = '9999-99-99';
+		$MOD["checkdate_bis"] = '9999-99-99';
 	}
 	
 	if ( !$feurequest ) {
-		$MOD[checkdate_von] = '9999-99-99';
-		$MOD[checkdate_bis] = '9999-99-99';
+		$MOD["checkdate_von"] = '9999-99-99';
+		$MOD["checkdate_bis"] = '9999-99-99';
 	}
 	
 	// check time options
 	if( $_POST['MOD_TS_timeopt'])
 	{
-		$MOD[checkdate_von] = dateout($_POST['MOD_TS_timeopt'],'');
-		$MOD[checkdate_bis] = datein($_POST['MOD_TS_timeopt'],'','','');
+		$MOD["checkdate_von"] = dateout($_POST['MOD_TS_timeopt'],'');
+		$MOD["checkdate_bis"] = datein($_POST['MOD_TS_timeopt'],'','','');
 	}
 	
 }
 
-if ( $bDebug ) print "<br>Datumswahl eingestellt auf von ".$MOD[checkdate_von]." bis ".$MOD[checkdate_bis];
+if ( $bDebug ) print "<br>Datumswahl eingestellt auf von ".$MOD["checkdate_von"]." bis ".$MOD["checkdate_bis"];
 
 
 // NEW: DETECT CATEGORIES TO BROWSE WHEN CHECKBUTTON; MIGHT BE SAME FOR DROPDOWNS
@@ -215,22 +215,22 @@ if ( $bDebug ) print "<br>Datumswahl eingestellt auf von ".$MOD[checkdate_von]."
 // module configuration settings
 // this one is also used to determine the theme categories to be displayed in the FEU-form
 $selectedcat = "";
-for ($i = 50; $i <= 50+count($MOD[categories]); $i++) {
+for ($i = 50; $i <= 50+count($MOD["categories"]); $i++) {
 	if ( "CMS_VALUE[$i]" != "") $selectedcat .= "CMS_VALUE[$i]".";";
 }
 if ( $selectedcat != "" ) { 
 	$selectedcat = substr($selectedcat , 0, -1); 	
 	$referencedTplCats = explode(";", $selectedcat); 
 } else {
-	//$referencedTplCats = $MOD[categories];
+	//$referencedTplCats = $MOD["categories"];
 	$referencedTplCats = explode(";", "genericDate");
 }
-$MOD[categories_sel][1] = $selectedcat;
+$MOD["categories_sel"][1] = $selectedcat;
 
 // FEU selection from FEU form
 $selectedcat = "";
 
-if ( $MOD[modconfigbased] == "feuform" ) {
+if ( $MOD["modconfigbased"] == "feuform" ) {
 	
 	if ($_POST['MOD_TS_cat_check'] == "yes") {
 		foreach ($_POST as $key => $value) {
@@ -243,7 +243,7 @@ if ( $MOD[modconfigbased] == "feuform" ) {
 		
 		$referencedFEUCats = explode(";", $selectedcat);
 	} else {
-		//$referencedFEUCats = ( count($referencedTplCats) > 0 ) ? $referencedTplCats : $MOD[categories];
+		//$referencedFEUCats = ( count($referencedTplCats) > 0 ) ? $referencedTplCats : $MOD["categories"];
 		$referencedFEUCats = ( count($referencedTplCats) > 0 ) ? $referencedTplCats : explode(";", "genericDate") ;
 	}
 	if ( $bDebug ) { print "<br>FEU-Kategorien NACH Explode:<br><pre>"; print_r($referencedFEUCats); print "</pre>";}
@@ -253,8 +253,8 @@ if ( $MOD[modconfigbased] == "feuform" ) {
 // now decide which category comparison to choose from. FEU requests first over module configuration
 $selectedcategories = ( $feurequest ) ? $referencedFEUCats : $referencedTplCats ;
 // in case the FEU form shows no categories and none are set in module configuration: choose all available ones nonetheless
-if ( !$MOD[show_cat] && $feurequest && count($referencedTplCats) == 0 ) $selectedcategories = $MOD[categories] ;
-//$selectedcategories = $MOD[categories] ;
+if ( !$MOD["show_cat"] && $feurequest && count($referencedTplCats) == 0 ) $selectedcategories = $MOD["categories"] ;
+//$selectedcategories = $MOD["categories"] ;
 
 
 if ( $bDebug ) { print "<br>Ausgabe der modulgesteuerten Kategorien:<br><pre>"; print_r($referencedTplCats); print "</pre>";}
@@ -262,12 +262,12 @@ if ( $bDebug ) { print "<br>Ausgabe der FEU-gesteuerten Kategorien:<br><pre>"; p
 if ( $bDebug ) { print "<br>Ausgabe der am Ende zugewiesenen Kategorien:<br><pre>"; print_r($selectedcategories); print "</pre>";}
 
 // Überprüfung ob zusätzliche Verzeichnis-Kategorien gewählt wurden
-if ($MOD[add_tree] == "" || ($MOD[add_tree_ids] == "" && $MOD[add_tree] == "auswahl"))
-	$MOD[add_tree] = 'keine';
+if ($MOD["add_tree"] == "" || ($MOD["add_tree_ids"] == "" && $MOD["add_tree"] == "auswahl"))
+	$MOD["add_tree"] = 'keine';
 
 // zusätzliche Verzeichnis-Kategorien ermitteln
-$MOD[sel_tree] = "'".$MOD[idcat]."'";
-switch ($MOD[add_tree]) 
+$MOD["sel_tree"] = "'".$MOD["idcat"]."'";
+switch ($MOD["add_tree"]) 
 {
 	case "below":
 	$MOD_TL_tree_level = -1;
@@ -280,20 +280,20 @@ switch ($MOD[add_tree])
 	$db->query($sql_tree);
 	while($db->nextRecord()) 
 	{
-		if ($db->f("idcat") == $MOD[idcat]) 
+		if ($db->f("idcat") == $MOD["idcat"]) 
 			$MOD_TL_tree_level = $db->f("level");
 		else if ($MOD_TL_tree_level > -1 && $db->f("level") > $MOD_TL_tree_level) 
-			$MOD[sel_tree] .= ",'".$db->f("idcat")."'";
+			$MOD["sel_tree"] .= ",'".$db->f("idcat")."'";
 			else if ($db->f("level") <= $MOD_TL_tree_level) 
 				break;
 			}
 	break;
 	case "select":
-	$MOD[add_tree_array] = explode(",",$MOD[add_tree_ids]);
-	foreach ($MOD[add_tree_array] as $value) 
+	$MOD["add_tree_array"] = explode(",",$MOD["add_tree_ids"]);
+	foreach ($MOD["add_tree_array"] as $value) 
 	{
 		$addicdat = str_replace( "cat_", "", $value);
-		$MOD[sel_tree] .= ",'".$addicdat."'";
+		$MOD["sel_tree"] .= ",'".$addicdat."'";
 	}
 	break;
 	default:
@@ -310,7 +310,7 @@ $sql .= "WHERE ARTLANG.idart = CATART.idart ";
 $sql .= "AND CATART.idcat = CAT.idcat ";
 $sql .= "AND ARTLANG.idartlang = CONTENT.idartlang ";
 $sql .= "AND ARTLANG.idlang = '".$lang."' ";
-$sql .= "AND CAT.idcat IN (".$MOD[sel_tree].") ";
+$sql .= "AND CAT.idcat IN (".$MOD["sel_tree"].") ";
 $sql .= "AND CAT.idclient = '".$client."' ";
 $sql .= "AND ARTLANG.online = '1' "; // nur Artikel die online sind
 $sql .= "AND CATART.idcat = CATLANG.idcat ";
@@ -326,13 +326,13 @@ $db->query($sql);
 // weiter, wenn Artikel gefunden wurden werden die Felder in ein Array geschrieben
 if ($db->numRows() > 0) 
 { 
-	$MOD[termine] = array(); // Array erzeugen, in dem die Termindaten abgelegt werden; 
+	$MOD["termine"] = array(); // Array erzeugen, in dem die Termindaten abgelegt werden; 
 	
-	while ($MOD[datensaetze] < $db->numRows()) // alle Datensätze durchlaufen und Inhalte in Array schreiben 
+	while ($MOD["datensaetze"] < $db->numRows()) // alle Datensätze durchlaufen und Inhalte in Array schreiben 
 	{ 
 		$db->nextRecord(); 
-		if ($db->f("idart") > $MOD[termine][$MOD[zaehler]]["idart"]) 
-			$MOD[zaehler]++; 
+		if ($db->f("idart") > $MOD["termine"][$MOD["zaehler"]]["idart"]) 
+			$MOD["zaehler"]++; 
 		if (isStartArticle($db->f("idartlang"),$MOD_TL_durchlaufdcat,$lang)==FALSE) 
 		{ 
 			$element_type = $db->f("idtype");
@@ -349,27 +349,27 @@ if ($db->numRows() > 0)
 					$date_His  = date('H:i:s',  (int)$xml->timestamp);
 					
 					
-					$MOD[termine][$MOD[zaehler]]["datum1"]     = ($date_Ymd == "0000-00-00" ) ? "1970-01-01" : $date_Ymd; 
-					$MOD[termine][$MOD[zaehler]]["zeit1"]      = $date_His; 
-					$MOD[termine][$MOD[zaehler]]["idart"]      = $db->f("idart"); 
-					$MOD[termine][$MOD[zaehler]]["text"]       = '';
-					$MOD[termine][$MOD[zaehler]]["linktype"]     = '';
-					$MOD[termine][$MOD[zaehler]]["linkexternal"] = '';
-					$MOD[termine][$MOD[zaehler]]["linkinternal"] = '';
-					$MOD[termine][$MOD[zaehler]]["linkfilename"]   = '';
-					$MOD[termine][$MOD[zaehler]]["ortdetail"]  = '';                     
-					$MOD[termine][$MOD[zaehler]]["linkdesc"]   = '';  
-					$MOD[termine][$MOD[zaehler]]["image"]      = '';  
-					$MOD[termine][$MOD[zaehler]]["linkframe"]  = '';
-					$MOD[termine][$MOD[zaehler]]["kategorie"]  = '';
-					$MOD[termine][$MOD[zaehler]]["zyklus"]     = 'no';
-					$MOD[termine][$MOD[zaehler]]["xtag"]       = '';
-					$MOD[termine][$MOD[zaehler]]["aliste"]     = '';
-					$MOD[termine][$MOD[zaehler]]["highlight"]  = '';
-					$MOD[termine][$MOD[zaehler]]["zutermine"]  = '';
+					$MOD["termine"][$MOD["zaehler"]]["datum1"]     = ($date_Ymd == "0000-00-00" ) ? "1970-01-01" : $date_Ymd; 
+					$MOD["termine"][$MOD["zaehler"]]["zeit1"]      = $date_His; 
+					$MOD["termine"][$MOD["zaehler"]]["idart"]      = $db->f("idart"); 
+					$MOD["termine"][$MOD["zaehler"]]["text"]       = '';
+					$MOD["termine"][$MOD["zaehler"]]["linktype"]     = '';
+					$MOD["termine"][$MOD["zaehler"]]["linkexternal"] = '';
+					$MOD["termine"][$MOD["zaehler"]]["linkinternal"] = '';
+					$MOD["termine"][$MOD["zaehler"]]["linkfilename"]   = '';
+					$MOD["termine"][$MOD["zaehler"]]["ortdetail"]  = '';                     
+					$MOD["termine"][$MOD["zaehler"]]["linkdesc"]   = '';  
+					$MOD["termine"][$MOD["zaehler"]]["image"]      = '';  
+					$MOD["termine"][$MOD["zaehler"]]["linkframe"]  = '';
+					$MOD["termine"][$MOD["zaehler"]]["kategorie"]  = '';
+					$MOD["termine"][$MOD["zaehler"]]["zyklus"]     = 'no';
+					$MOD["termine"][$MOD["zaehler"]]["xtag"]       = '';
+					$MOD["termine"][$MOD["zaehler"]]["aliste"]     = '';
+					$MOD["termine"][$MOD["zaehler"]]["highlight"]  = '';
+					$MOD["termine"][$MOD["zaehler"]]["zutermine"]  = '';
 					//precaution: set date2=date1, might be overwritten later
-					$MOD[termine][$MOD[zaehler]]["datum2"] = $MOD[termine][$MOD[zaehler]]["datum1"];
-					$MOD[termine][$MOD[zaehler]]["zeit2"] = $MOD[termine][$MOD[zaehler]]["zeit1"];
+					$MOD["termine"][$MOD["zaehler"]]["datum2"] = $MOD["termine"][$MOD["zaehler"]]["datum1"];
+					$MOD["termine"][$MOD["zaehler"]]["zeit2"] = $MOD["termine"][$MOD["zaehler"]]["zeit1"];
 				}
 				break; 
 				case 2: // Endtermin inkl. Uhrzeit
@@ -379,55 +379,55 @@ if ($db->numRows() > 0)
 					$xml = simplexml_import_dom($dom);
 					$date_Ymd  = date('Y-m-d',  (int)$xml->timestamp);
 					$date_His  = date('H:i:s',  (int)$xml->timestamp);					
-					$MOD[termine][$MOD[zaehler]]["datum2"] = $date_Ymd;
-					$MOD[termine][$MOD[zaehler]]["zeit2"] = $date_His;
+					$MOD["termine"][$MOD["zaehler"]]["datum2"] = $date_Ymd;
+					$MOD["termine"][$MOD["zaehler"]]["zeit2"] = $date_His;
 				}
 				break; 
 				
 				case 4: // Ort 
 				if ($element_type == '3') // Text
-					$MOD[termine][$MOD[zaehler]]["ort"] = $db->f("value");
+					$MOD["termine"][$MOD["zaehler"]]["ort"] = $db->f("value");
 				break; 
 				case 5: // Ortdetail
 				if ($element_type == '3') // Text
-					$MOD[termine][$MOD[zaehler]]["ortdetail"] = $db->f("value");
+					$MOD["termine"][$MOD["zaehler"]]["ortdetail"] = $db->f("value");
 				break; 				
 				case 6: // Titel 
 				if ($element_type == '3') // Text
-					$MOD[termine][$MOD[zaehler]]["titel"] = $db->f("value");
+					$MOD["termine"][$MOD["zaehler"]]["titel"] = $db->f("value");
 				break;
 				case 7: // Teaser 
 				if ($element_type == '3') // Text
-					$MOD[termine][$MOD[zaehler]]["teaser"] = ( $db->f("value") == "yes") ? true : false;
+					$MOD["termine"][$MOD["zaehler"]]["teaser"] = ( $db->f("value") == "yes") ? true : false;
 				break; 				
 				case 8: // HTML 
-				$MOD[termine][$MOD[zaehler]]["text"] = $db->f("value"); 
+				$MOD["termine"][$MOD["zaehler"]]["text"] = $db->f("value"); 
 				break; 
 				case 9: // Link, Achtung 4 Zustände
 				$dom = new domDocument;
 				$dom->loadXML($db->f("value"));
 				$xml = simplexml_import_dom($dom);
-				$MOD[termine][$MOD[zaehler]]["linktype"] = $xml->type;				
-				$MOD[termine][$MOD[zaehler]]["linkexternal"] = $xml->externallink;
-				$MOD[termine][$MOD[zaehler]]["linkframe"] = $xml->newwindow;
-				$MOD[termine][$MOD[zaehler]]["linkdesc"] = $xml->title;			
-				$MOD[termine][$MOD[zaehler]]["linkinternal"] = $xml->idart;	
-				$MOD[termine][$MOD[zaehler]]["linkfilename"] = $xml->filename;								
+				$MOD["termine"][$MOD["zaehler"]]["linktype"] = $xml->type;				
+				$MOD["termine"][$MOD["zaehler"]]["linkexternal"] = $xml->externallink;
+				$MOD["termine"][$MOD["zaehler"]]["linkframe"] = $xml->newwindow;
+				$MOD["termine"][$MOD["zaehler"]]["linkdesc"] = $xml->title;			
+				$MOD["termine"][$MOD["zaehler"]]["linkinternal"] = $xml->idart;	
+				$MOD["termine"][$MOD["zaehler"]]["linkfilename"] = $xml->filename;								
 				break; 
 				case 10: // Termin Zyklus 
-				$MOD[termine][$MOD[zaehler]]["zyklus"] = ($element_type == '3' && $db->f("value") != "") ? $db->f("value") : "no";
+				$MOD["termine"][$MOD["zaehler"]]["zyklus"] = ($element_type == '3' && $db->f("value") != "") ? $db->f("value") : "no";
 				break; 
 				case 11: // Zyklus Wochentage 
 				if ($element_type == '3') // Text
-					$MOD[termine][$MOD[zaehler]]["wtagezyklus"] = $db->f("value");
+					$MOD["termine"][$MOD["zaehler"]]["wtagezyklus"] = $db->f("value");
 				break; 
 				case 12: // 1., 2., ... Wochentag im Monat
 				if ($element_type == '3') // Text
-					$MOD[termine][$MOD[zaehler]]["wtagemon"] = $db->f("value");
+					$MOD["termine"][$MOD["zaehler"]]["wtagemon"] = $db->f("value");
 				break; 
 				case 13: // Terminkategorien
 				if ($element_type == '3') {// Text
-					$MOD[termine][$MOD[zaehler]]["kategorie"] = ( $db->f("value") == "" ) ? "genericDate" : "genericDate;".$db->f("value");
+					$MOD["termine"][$MOD["zaehler"]]["kategorie"] = ( $db->f("value") == "" ) ? "genericDate" : "genericDate;".$db->f("value");
 				}
 				case 14: // Bild
 				if ($element_type == '22') {
@@ -435,55 +435,55 @@ if ($db->numRows() > 0)
 					$tlimage = new cApiUpload($imageid);
 					$meta = new cApiUploadMeta();
 					$meta->loadByUploadIdAndLanguageId( $imageid, $lang );					
-					$MOD[termine][$MOD[zaehler]]["image"] = $tlimage->get('filename');
-					$MOD[termine][$MOD[zaehler]]["imageid"] = $imageid;
-					$MOD[termine][$MOD[zaehler]]["imagedir"] = $tlimage->get('dirname');
-					$MOD[termine][$MOD[zaehler]]["imagefullpath"] = "upload/".$tlimage->get('dirname').$tlimage->get('filename');
-					$MOD[termine][$MOD[zaehler]]["medianame"]  = stripslashes($meta->get("medianame"));
-					$MOD[termine][$MOD[zaehler]]["description"] = stripslashes(str_replace("\"", "&quot;", $meta->get('description')));
-					$MOD[termine][$MOD[zaehler]]["copyright"]  = stripslashes($meta->get('copyright'));
-					$MOD[termine][$MOD[zaehler]]["keywords"]  = stripslashes($meta->get('keywords'));
-					$MOD[termine][$MOD[zaehler]]["internal_description"]  = stripslashes($meta->get('internal_description'));
+					$MOD["termine"][$MOD["zaehler"]]["image"] = $tlimage->get('filename');
+					$MOD["termine"][$MOD["zaehler"]]["imageid"] = $imageid;
+					$MOD["termine"][$MOD["zaehler"]]["imagedir"] = $tlimage->get('dirname');
+					$MOD["termine"][$MOD["zaehler"]]["imagefullpath"] = "upload/".$tlimage->get('dirname').$tlimage->get('filename');
+					$MOD["termine"][$MOD["zaehler"]]["medianame"]  = stripslashes($meta->get("medianame"));
+					$MOD["termine"][$MOD["zaehler"]]["description"] = stripslashes(str_replace("\"", "&quot;", $meta->get('description')));
+					$MOD["termine"][$MOD["zaehler"]]["copyright"]  = stripslashes($meta->get('copyright'));
+					$MOD["termine"][$MOD["zaehler"]]["keywords"]  = stripslashes($meta->get('keywords'));
+					$MOD["termine"][$MOD["zaehler"]]["internal_description"]  = stripslashes($meta->get('internal_description'));
 				}
 				break; 
 				case 16: // Zyklus xten Tag
 				if ($element_type == '3') // Text
-					$MOD[termine][$MOD[zaehler]]["xtag"] = $db->f("value");
+					$MOD["termine"][$MOD["zaehler"]]["xtag"] = $db->f("value");
 				break; 
 				case 17: //  Ausschlussliste
 				if ($element_type == '3') // Text
-					$MOD[termine][$MOD[zaehler]]["aliste"] = $db->f("value");
+					$MOD["termine"][$MOD["zaehler"]]["aliste"] = $db->f("value");
 				break; 
 				case 20: // Termin hervorheben
 				if ($element_type == '3') // Text
-					$MOD[termine][$MOD[zaehler]]["highlight"] = $db->f("value");
+					$MOD["termine"][$MOD["zaehler"]]["highlight"] = $db->f("value");
 				break; 
 				case 22: // zusätzliche termine
 				if ($element_type == '3') // Text
-					$MOD[termine][$MOD[zaehler]]["zutermine"] = $db->f("value");
+					$MOD["termine"][$MOD["zaehler"]]["zutermine"] = $db->f("value");
 				break; 
 			} 
 			
 		} 
-		$MOD[datensaetze]++;
+		$MOD["datensaetze"]++;
 		
 	} 
 	
-	$MOD[termine] = array_values($MOD[termine]);
+	$MOD["termine"] = array_values($MOD["termine"]);
 	
-	if ( $bDebug ) print "<br>Anzahl Termine nach Einlesen und 1. Umkopieren: ".count($MOD[termine]);
-	if ( $bDebug ) { print "<br>Array nach Einlesen und 1. Umkopieren:<br><pre>"; print_r($MOD[termine]); print "</pre>";}
+	if ( $bDebug ) print "<br>Anzahl Termine nach Einlesen und 1. Umkopieren: ".count($MOD["termine"]);
+	if ( $bDebug ) { print "<br>Array nach Einlesen und 1. Umkopieren:<br><pre>"; print_r($MOD["termine"]); print "</pre>";}
 	
 	// Ermittlung der zyklischen Termine und Löschen von Datensätzen, die nicht angezeigt werden müssen
 	
 	$zusatzterminliste = array();
 	
-	foreach ( $MOD[termine] AS $termin ) 
+	foreach ( $MOD["termine"] AS $termin ) 
 	{   
 		if (($termin["zyklus"] != 'no' || $termin["zutermine"] != '') && $termin["idart"] != '' ) // Zyklischer Termin
 		{
 			if ($bDebug)  print "<br>Cycle Dates found!";
-			$MOD_TL_zdate_array = makedatearray($termin["datum1"],$termin["datum2"],$termin["zyklus"],$termin["xtag"], $termin["aliste"],$MOD[checkdate_von],$MOD[checkdate_bis],$termin["wtagezyklus"],$termin["wtagemon"],$termin["zutermine"]);
+			$MOD_TL_zdate_array = makedatearray($termin["datum1"],$termin["datum2"],$termin["zyklus"],$termin["xtag"], $termin["aliste"],$MOD["checkdate_von"],$MOD["checkdate_bis"],$termin["wtagezyklus"],$termin["wtagemon"],$termin["zutermine"]);
 			if ($bDebug) print "<br>Count Cycle-Dates: ".count($MOD_TL_zdate_array);
 			
 			if(count($MOD_TL_zdate_array) >= 1)
@@ -521,23 +521,23 @@ if ($db->numRows() > 0)
 	}
 	
 	if ($bDebug) print "zusatztermine ".count($zusatzterminliste);
-	if ($bDebug) print "anzahl vor zusatztermine einfügen: ".count($MOD[termine]);
+	if ($bDebug) print "anzahl vor zusatztermine einfügen: ".count($MOD["termine"]);
 	
-	$MOD[termine] = array_merge($MOD[termine], $zusatzterminliste);
-	if ($bDebug) print "anzahl nach zusatztermine einfügen: ".count($MOD[termine]);
+	$MOD["termine"] = array_merge($MOD["termine"], $zusatzterminliste);
+	if ($bDebug) print "anzahl nach zusatztermine einfügen: ".count($MOD["termine"]);
 	
 	
-	if ( $bDebug ) print "<br>Anzahl Termine nach Sortierung, VOR Bereinigung nach Datum und Kategorie: ". count($MOD[termine]);
-	if ( $bDebug ) { print "<br>Array nach Sortierung, VOR Bereinigung nach Datum und Kategorie:<br><pre>"; print_r($MOD[termine]); print "</pre>";}
+	if ( $bDebug ) print "<br>Anzahl Termine nach Sortierung, VOR Bereinigung nach Datum und Kategorie: ". count($MOD["termine"]);
+	if ( $bDebug ) { print "<br>Array nach Sortierung, VOR Bereinigung nach Datum und Kategorie:<br><pre>"; print_r($MOD["termine"]); print "</pre>";}
 	if ( $bDebug ) { print "<br>Zu berücksichtigende Themen-Kategorien:<br><pre>"; print_r($selectedcategories); print "</pre>";}
 	
 	// Prüfung ob Termin im aktuellen Anzeigezeitrahmen ist
 	
-	$MOD[zaehler2] = count($MOD[termine]);
+	$MOD["zaehler2"] = count($MOD["termine"]);
 	
-	// before stripping, keep this version of $MOD[termine] as a base for full calendar display
+	// before stripping, keep this version of $MOD["termine"] as a base for full calendar display
 	// just clear this new list and take out unwanted category entries
-	$calendarlist = $MOD[termine];
+	$calendarlist = $MOD["termine"];
 	foreach ( $calendarlist AS $key=>$termin ) 
 	{
 		// Now check if categories fit; if not, mark for deletion!
@@ -559,7 +559,7 @@ if ($db->numRows() > 0)
 	
 	
 	
-	foreach ( $MOD[termine] AS $key=>$termin ) 
+	foreach ( $MOD["termine"] AS $key=>$termin ) 
 	{
 		$MOD_TL_termin_del = false;
 		
@@ -568,20 +568,20 @@ if ($db->numRows() > 0)
 		if ( !isset($_GET["MOD_TL_newdate"]) ) {
 			
 			// note: dates which are up and running RIGHT now are both listed on passed events and current events, as they are never marked for deletion
-			if (!( ($termin["datum1"] >= $MOD[checkdate_von] && $termin["datum1"] <= $MOD[checkdate_bis]) ||
-				  ($termin["datum2"] >= $MOD[checkdate_von] && $termin["datum2"] <= $MOD[checkdate_bis])  ))
+			if (!( ($termin["datum1"] >= $MOD["checkdate_von"] && $termin["datum1"] <= $MOD["checkdate_bis"]) ||
+				  ($termin["datum2"] >= $MOD["checkdate_von"] && $termin["datum2"] <= $MOD["checkdate_bis"])  ))
 			{
 				$MOD_TL_termin_del = true;
 			}
 			
-			if ( $MOD[show_teaser] && !$termin["teaser"] ) $MOD_TL_termin_del = true;
+			if ( $MOD["show_teaser"] && !$termin["teaser"] ) $MOD_TL_termin_del = true;
 			
 			
 		} else {
 			
 			// case 2: check dates determined by calendar
 			
-			if (!( ($termin["datum1"] <= $MOD[checkdate_von] && $termin["datum2"] >= $MOD[checkdate_bis])  ))
+			if (!( ($termin["datum1"] <= $MOD["checkdate_von"] && $termin["datum2"] >= $MOD["checkdate_bis"])  ))
 			{
 				$MOD_TL_termin_del = true;
 			}
@@ -597,15 +597,15 @@ if ($db->numRows() > 0)
 		if	( !$foundit ) $MOD_TL_termin_del  = true;
 		
 		// now delete if necessary
-		if($MOD_TL_termin_del) unset ($MOD[termine][$key]);
+		if($MOD_TL_termin_del) unset ($MOD["termine"][$key]);
 	}
 	
 	
-	if( !empty($MOD[termine]) ) 
+	if( !empty($MOD["termine"]) ) 
 	{
 		
 		// nach Datum und Zeit sortieren
-		foreach($MOD[termine] as $key => $array) {
+		foreach($MOD["termine"] as $key => $array) {
 			$datum1Array[$key] = $array["datum1"];
 			$datum2Array[$key] = $array["datum2"];
 			$zeit1Array[$key] = $array["zeit1"];
@@ -615,21 +615,21 @@ if ($db->numRows() > 0)
 			$idArray[$key] = $array["id"];
 		}
 		
-		$MOD[sort] = ($MOD[sort] == 'DESC') ? "DESC" : "ASC";
-		$upordown = constant('SORT_' . $MOD[sort]);
-		array_multisort($datum1Array, $upordown, SORT_STRING, $zeit1Array, $upordown, SORT_STRING, $zeit2Array, $upordown, SORT_STRING, $MOD[termine]);
+		$MOD["sort"] = ($MOD["sort"] == 'DESC') ? "DESC" : "ASC";
+		$upordown = constant('SORT_' . $MOD["sort"]);
+		array_multisort($datum1Array, $upordown, SORT_STRING, $zeit1Array, $upordown, SORT_STRING, $zeit2Array, $upordown, SORT_STRING, $MOD["termine"]);
 		
 	}
 	
 	// Extend array with additional values, mainly for date expressions
 	
-	$terminCount = count($MOD[termine]);
+	$terminCount = count($MOD["termine"]);
 	if ( $bDebug ) print "<br>Anzahl Termine nach Sortierung, nach Bereinigung nach Datum und Kategorie: ". $terminCount;
 	
 	$counter = 1;
 	
 	
-	foreach ( $MOD[termine] AS &$termin ) {
+	foreach ( $MOD["termine"] AS &$termin ) {
 		
 		
 		// do this first, as we need parts of it at the end of the routine
@@ -638,46 +638,46 @@ if ($db->numRows() > 0)
 		
 		// Prepare all sorts of date strings for both dates			
 		$dateHelper = new DateTime($termin["datum1"]); 
-		$termin[date1_month]      = $dateHelper->format("m");
-		$termin[date1_monthnum]   = $dateHelper->format("n");
-		$termin[date1_monthshort] = $months_short[$lang][$termin[date1_monthnum]];
-		$termin[date1_monthfull]  = $months_full[$lang][$termin[date1_monthnum]];
-		$termin[date1_yearshort]  = $dateHelper->format("y");
-		$termin[date1_yearfull]   = $dateHelper->format("Y");
-		$termin[date1_day]        = $dateHelper->format("d");
-		$termin[date1_daynum]     = $dateHelper->format("w");
-		$termin[date1_dayshort]   = $days_short[$lang][$termin[date1_daynum]];
-		$termin[date1_dayfull]    = $days_full[$lang][$termin[date1_daynum]];
+		$termin["date1_month"]      = $dateHelper->format("m");
+		$termin["date1_monthnum"]   = $dateHelper->format("n");
+		$termin["date1_monthshort"] = $months_short[$lang][$termin["date1_monthnum"]];
+		$termin["date1_monthfull"]  = $months_full[$lang][$termin["date1_monthnum"]];
+		$termin["date1_yearshort"]  = $dateHelper->format("y");
+		$termin["date1_yearfull"]   = $dateHelper->format("Y");
+		$termin["date1_day"]        = $dateHelper->format("d");
+		$termin["date1_daynum"]     = $dateHelper->format("w");
+		$termin["date1_dayshort"]   = $days_short[$lang][$termin["date1_daynum"]];
+		$termin["date1_dayfull"]    = $days_full[$lang][$termin["date1_daynum"]];
 		
 		$replace1 = array(" ".$dateHelper->format("D")." ", " ".$dateHelper->format("l")." ", " ".$dateHelper->format("M")." ", " ".$dateHelper->format("F")." ");
-		$replace2 = array(" ".$termin[date1_dayshort]." ", " ".$termin[date1_dayfull]." ", " ".$termin[date1_monthshort]." ", " ".$termin[date1_monthfull]." ");
-		$termin[date1_lang]       = trim( str_replace($replace1, $replace2, " ".$dateHelper->format($MOD[dateformat])." ") );
+		$replace2 = array(" ".$termin["date1_dayshort"]." ", " ".$termin["date1_dayfull"]." ", " ".$termin["date1_monthshort"]." ", " ".$termin["date1_monthfull"]." ");
+		$termin["date1_lang"]       = trim( str_replace($replace1, $replace2, " ".$dateHelper->format($MOD["dateformat"])." ") );
 		
 		if ( $termin["datum2"] != "" ) {
 			$dateHelper = new DateTime($termin["datum2"]); 
-			$termin[date2_month]      = $dateHelper->format("m");
-			$termin[date2_monthnum]   = $dateHelper->format("n");
-			$termin[date2_monthshort] = $months_short[$lang][$termin[date2_monthnum]];
-			$termin[date2_monthfull]  = $months_full[$lang][$termin[date2_monthnum]];
-			$termin[date2_yearshort]  = $dateHelper->format("y");
-			$termin[date2_yearfull]   = $dateHelper->format("Y");
-			$termin[date2_day]        = $dateHelper->format("d");
-			$termin[date2_daynum]     = $dateHelper->format("w");
-			$termin[date2_dayshort]   = $days_short[$lang][$termin[date2_daynum]];
-			$termin[date2_dayfull]    = $days_full[$lang][$termin[date2_daynum]];
+			$termin["date2_month"]      = $dateHelper->format("m");
+			$termin["date2_monthnum"]   = $dateHelper->format("n");
+			$termin["date2_monthshort"] = $months_short[$lang][$termin["date2_monthnum"]];
+			$termin["date2_monthfull"]  = $months_full[$lang][$termin["date2_monthnum"]];
+			$termin["date2_yearshort"]  = $dateHelper->format("y");
+			$termin["date2_yearfull"]   = $dateHelper->format("Y");
+			$termin["date2_day"]        = $dateHelper->format("d");
+			$termin["date2_daynum"]     = $dateHelper->format("w");
+			$termin["date2_dayshort"]   = $days_short[$lang][$termin["date2_daynum"]];
+			$termin["date2_dayfull"]    = $days_full[$lang][$termin["date2_daynum"]];
 			$replace1 = array(" ".$dateHelper->format("D")." ", " ".$dateHelper->format("l")." ", " ".$dateHelper->format("M")." ", " ".$dateHelper->format("F")." ");
-			$replace2 = array(" ".$termin[date2_dayshort]." ", " ".$termin[date2_dayfull]." ", " ".$termin[date2_monthshort]." ", " ".$termin[date2_monthfull]." ");
-			$termin[date2_lang]       = trim (str_replace($replace1, $replace2, " ".$dateHelper->format($MOD[dateformat])." ") );
+			$replace2 = array(" ".$termin["date2_dayshort"]." ", " ".$termin["date2_dayfull"]." ", " ".$termin["date2_monthshort"]." ", " ".$termin["date2_monthfull"]." ");
+			$termin["date2_lang"]       = trim (str_replace($replace1, $replace2, " ".$dateHelper->format($MOD["dateformat"])." ") );
 		}
 		
-		$termin[oneday]      = ($termin[datum1] == $termin[datum2]) ? true : false;		
-		$termin[groupeddate] =  ( $termin[prevdate] == $termin[datum1] ) ? true : false;		
+		$termin["oneday"]      = ($termin["datum1"] == $termin["datum2"]) ? true : false;		
+		$termin["groupeddate"] =  ( $termin["prevdate"] == $termin["datum1"] ) ? true : false;		
 		
-		$termin[prevdate]    = $termin[datum1]; 
-		$MOD[gefunden]       = true;
+		$termin["prevdate"]    = $termin["datum1"]; 
+		$MOD["gefunden"]       = true;
 		
 		// cut the array if a limiter is given
-		if ( !($MOD[anzahl_termine] >=0 && $counter > $MOD[anzahl_termine]) ) { array_push($terminliste, $termin); }
+		if ( !($MOD["anzahl_termine"] >=0 && $counter > $MOD["anzahl_termine"]) ) { array_push($terminliste, $termin); }
 		$counter++;		
 		
 	}	
@@ -711,29 +711,29 @@ $tpl->assign('datefrom', $MOD_TS_datum_von);
 $tpl->assign('dateuntil', $MOD_TS_datum_bis);
 $tpl->assign('formaction', $REQUEST_URI);
 $tpl->assign('MOD', $MOD);
-$tpl->assign('categories_checkbox', createCheckbox($MOD[categories_sel], $feuselectedcat, "categories", $lang, 130 ));
-$tpl->assign('categories_dropdown', createSel($MOD[categories_sel], $feuselectedcat, "categories", $lang ));
+$tpl->assign('categories_checkbox', createCheckbox($MOD["categories_sel"], $feuselectedcat, "categories", $lang, 130 ));
+$tpl->assign('categories_dropdown', createSel($MOD["categories_sel"], $feuselectedcat, "categories", $lang ));
 $tpl->assign('errors', $errors);
 
 
-if ( $bDebug) { print "<pre>";print_r($MOD[termine]);print "</pre>"; }
+if ( $bDebug) { print "<pre>";print_r($MOD["termine"]);print "</pre>"; }
 
 // if module wants calendar to be displayed: create it
-if ( $MOD[modconfigbased] == "calendar") {
+if ( $MOD["modconfigbased"] == "calendar") {
 	$sKalender = new sKalender();
-	$sKalender->setDate( $MOD[newdate_array][2], $MOD[newdate_array][1], $MOD[newdate_array][0] );
+	$sKalender->setDate( $MOD["newdate_array"][2], $MOD["newdate_array"][1], $MOD["newdate_array"][0] );
 	$tpl->assign('calendar', $sKalender->printCalender());
-	$tpl->display($MOD[tpl_calendar]);
-	if ( $calendarrequest && count($terminliste) > 0 ) $tpl->display($MOD[tpl_results]);
+	$tpl->display($MOD["tpl_calendar"]);
+	if ( $calendarrequest && count($terminliste) > 0 ) $tpl->display($MOD["tpl_results"]);
 }
 
-if ( $MOD[modconfigbased] == "feuform") {
-	$tpl->display($MOD[tpl_feuform]);
-	if ( count($terminliste) > 0 ) $tpl->display($MOD[tpl_results]);
+if ( $MOD["modconfigbased"] == "feuform") {
+	$tpl->display($MOD["tpl_feuform"]);
+	if ( count($terminliste) > 0 ) $tpl->display($MOD["tpl_results"]);
 	if ( $feurequest && count($terminliste) == 0 ) $tpl->display('results_none.tpl');
 }
 
-if ( $MOD[modconfigbased] == "module" && count($terminliste) > 0)  $tpl->display($MOD[tpl_results]);
+if ( $MOD["modconfigbased"] == "module" && count($terminliste) > 0)  $tpl->display($MOD["tpl_results"]);
 
 /*** classes **/
 
@@ -809,7 +809,7 @@ if ( !class_exists(sKalender) ) {
 			$MOD_TL_newdate = date("Y", $MOD_TL_neues_datum ).'-'.date("n", $MOD_TL_neues_datum ).'-1';
 			
 			// Dropdownfeld aufbauen
-			$MOD_TL_arry_years = count($MOD[array_down]); // Anzahl der Jahre
+			$MOD_TL_arry_years = count($MOD["array_down"]); // Anzahl der Jahre
 			$MOD_TL_dropdown    =  '<select name="MOD_TL_newdate" onchange="parent.frames.top.location.href = this.value">';
 			$MOD_TL_dropdown   .=  '<option value="'.$MOD_TL_newdate.'">'.$months_full[$lang][ $MOD_TL_datum["mon"] ].'&nbsp;'.$MOD_TL_datum["year"].'</option>';
 			
@@ -817,13 +817,13 @@ if ( !class_exists(sKalender) ) {
 			{
 				for( $MOD_TL_dmonth = 1; $MOD_TL_dmonth <= 12; $MOD_TL_dmonth++ )
 				{
-					$MOD_TL_dropdown   .=  '<option value="front_content.php?subid='.$subid.'&idart='.$idart.'&MOD_TL_newdate='.$MOD[array_down][$MOD_TL_dyears].'-'.$MOD_TL_dmonth.'-1">'.$months_full[$lang][$MOD_TL_dmonth].'&nbsp;'.$MOD[array_down][$MOD_TL_dyears].'</option>';
+					$MOD_TL_dropdown   .=  '<option value="front_content.php?subid='.$subid.'&idart='.$idart.'&MOD_TL_newdate='.$MOD["array_down"][$MOD_TL_dyears].'-'.$MOD_TL_dmonth.'-1">'.$months_full[$lang][$MOD_TL_dmonth].'&nbsp;'.$MOD["array_down"][$MOD_TL_dyears].'</option>';
 				}
 			}
 			$MOD_TL_dropdown   .=  '</select>';
 			
-			if(!$MOD[ddownyn])
-				$output .= '<td class="navm"><a href="front_content.php?idart='.$MOD[idart].'&MOD_TL_newdate='.$MOD_TL_newdate.'&MOD_TL_show=m" title="'.mi18n("Monats&uuml;bersicht anzeigen.").'">'.$months_full[$lang][ $MOD_TL_datum["mon"] ].'&nbsp;'.$MOD_TL_datum["year"].'</a></td>';
+			if(!$MOD["ddownyn"])
+				$output .= '<td class="navm"><a href="front_content.php?idart='.$MOD["idart"].'&MOD_TL_newdate='.$MOD_TL_newdate.'&MOD_TL_show=m" title="'.mi18n("Monats&uuml;bersicht anzeigen.").'">'.$months_full[$lang][ $MOD_TL_datum["mon"] ].'&nbsp;'.$MOD_TL_datum["year"].'</a></td>';
 			else
 				$output .= '<td class="navm">'.$MOD_TL_dropdown.'</td>';
 			
@@ -837,8 +837,8 @@ if ( !class_exists(sKalender) ) {
 <table>';
 			
 			// Ermittle die maximalen Tage für den aktuellen Monat
-			$MOD[tag_max] = date( "t", mktime( 0, 0, 0, $MOD_TL_datum["mon"], 1, $MOD_TL_datum["year"] ) );
-			for( $MOD_TL_tag_aktuell = 1; $MOD_TL_tag_aktuell <= $MOD[tag_max]; $MOD_TL_tag_aktuell++ )
+			$MOD["tag_max"] = date( "t", mktime( 0, 0, 0, $MOD_TL_datum["mon"], 1, $MOD_TL_datum["year"] ) );
+			for( $MOD_TL_tag_aktuell = 1; $MOD_TL_tag_aktuell <= $MOD["tag_max"]; $MOD_TL_tag_aktuell++ )
 			{
 				$MOD_TL_tag_nummer = date("w", mktime(0, 0, 0, $MOD_TL_datum["mon"], $MOD_TL_tag_aktuell, $MOD_TL_datum["year"])) + 1;
 				if ($MOD_TL_tag_aktuell == 1)
@@ -962,7 +962,7 @@ if ( !class_exists(sKalender) ) {
 			$MOD_TL_wochentag = date("w", mktime(0, 0, 0, date("m", $this->getDateByMonth( 0 ) ), $MOD_TL_tag,  date("Y", $this->getDateByMonth( 0 ) )  ) );
 			
 			$MOD_TL_termin_ok = false;
-			if ($MOD[anzeigemodus])
+			if ($MOD["anzeigemodus"])
 			{
 				if( $MOD_TL_wochentag == 6  ||  $MOD_TL_wochentag == 0 )	// Wochenende
 					$MOD_TL_style = "wochenende";
@@ -1011,11 +1011,11 @@ if ( !class_exists(sKalender) ) {
 			
 			if ($MOD_TL_termin_ok)
 			{
-				if($MOD[linkyn])
-					$MOD_TL_val = '<td class="'.$MOD_TL_style.'"><a class="tag" href="front_content.php?idart='.$MOD[idart].'&MOD_TL_newdate='.$MOD_TL_datum_aktuell.'&MOD_TL_show=t" title="'.mi18n("Termine für den").' '.$MOD_TL_datum_title.' '.mi18n("anzeigen").'.">'.$MOD_TL_tag.'</a></td>';
+				if($MOD["linkyn"])
+					$MOD_TL_val = '<td class="'.$MOD_TL_style.'"><a class="tag" href="front_content.php?idart='.$MOD["idart"].'&MOD_TL_newdate='.$MOD_TL_datum_aktuell.'&MOD_TL_show=t" title="'.mi18n("Termine für den").' '.$MOD_TL_datum_title.' '.mi18n("anzeigen").'.">'.$MOD_TL_tag.'</a></td>';
 				else
 				{
-					if ($MOD[anzeigemodus])
+					if ($MOD["anzeigemodus"])
 						$MOD_TL_val = '<td class="'.$MOD_TL_style.'"><a class="tag" title="'.mi18n("Für den").' '.$MOD_TL_datum_title.' '.mi18n("existieren Termine").'.">'.$MOD_TL_tag.'</a></td>';
 					else
 						$MOD_TL_val = '<td class="'.$MOD_TL_style.'"><a class="tag" title="'.mi18n("gebucht").'">'.$MOD_TL_tag.'</a></td>';
@@ -1023,7 +1023,7 @@ if ( !class_exists(sKalender) ) {
 			}
 			else 
 			{
-				if ($MOD[anzeigemodus])
+				if ($MOD["anzeigemodus"])
 					$MOD_TL_val = '<td class="'.$MOD_TL_style.'"><a class="tag" title="'.mi18n("Für den").' '.$MOD_TL_datum_title.' '.mi18n("existieren keine Termine.").'">'.$MOD_TL_tag.'</a></td>';
 				else
 					$MOD_TL_val = '<td class="'.$MOD_TL_style.'"><a class="tag" title="'.mi18n("frei").'">'.$MOD_TL_tag.'</a></td>';
@@ -1033,4 +1033,4 @@ if ( !class_exists(sKalender) ) {
 	}
 }
 
-?> 
+?>
